@@ -4,7 +4,7 @@
 FROM openjdk:8-jdk
 
 # To enable running android tools such as aapt
-RUN dpkg --add-architecture i386 && apt-get update && apt-get -y upgrade
+RUN dpkg --add-architecture i386 && dpkg --add-architecture armhf && apt-get update && apt-get -y upgrade
 RUN apt-get install -y lib32z1 lib32stdc++6
 # For Go:
 RUN apt-get -y --no-install-recommends install curl gcc

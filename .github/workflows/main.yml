@@ -14,10 +14,10 @@ jobs:
     steps:
       - name: clone
         run: |
-          if [ ! -d "tailscale-android" ]; then
+          if [[ `git rev-parse --is-inside-work-tree` != "true" ]]; then
               git clone https://github.com/jueti/tailscale-android.git
+              pushd tailscale-android
           fi
-          popd tailscale-android
       - name: clean
         run: |
           git clean -fd

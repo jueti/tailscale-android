@@ -20,7 +20,7 @@ jobs:
       - name: pull
         if: ${{ failure() }}
         run: |
-          git reset HEAD
+          git reset
           git pull --ff
       - name: modify
         run: |

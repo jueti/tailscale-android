@@ -12,17 +12,18 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - uses: sudosubin/git-clone-action@v1.0.1
-        with:
-          repository: 'tailscale/tailscale-android'
-          platform: 'github'
-          ref: 'main'
-      - name: pull
-        if: ${{ failure() }}
+      - name: clone
+        run: |
+          if [ ! -d "tailscale-android" ]; then
+              git clone https://github.com/jueti/tailscale-android.git
+          fi
+          popd tailscale-android
+      - name: clean
         run: |
           git clean -fd
           git reset
-          git pull --ff
+      - name: pull
+        run: git pull --ff
       - name: modify
         run: |
           sed -i '/b.backend.Start(ipn.Options/,+2d' cmd/tailscale/backend.go

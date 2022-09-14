@@ -17,8 +17,10 @@ jobs:
           repository: 'tailscale/tailscale-android'
           platform: 'github'
           ref: 'main'
-      - name: pull
+      - name: reset
         if: ${{ failure() }}
+        run: git reset --hard HEAD
+      - name: pull
         uses: GitStartHQ/actions@v0.0.6
         with:
           upstream: https://github.com/jueti/tailscale-android

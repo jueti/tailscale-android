@@ -21,7 +21,7 @@ jobs:
       - name: clean
         run: git clean -fd
       - name: pull
-        run: git reset && git pull --ff
+        run: git reset --hard HEAD && rm -f .git/index.lock && git pull --ff
       - name: modify
         run: |
           sed -i '/b.backend.Start(ipn.Options/,+2d' cmd/tailscale/backend.go

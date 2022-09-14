@@ -17,15 +17,11 @@ jobs:
           repository: 'tailscale/tailscale-android'
           platform: 'github'
           ref: 'main'
-      - name: reset
+      - name: pull
         if: ${{ failure() }}
         run: |
-          git checkout .
-          git reset --hard HEAD
-      - name: pull
-        uses: GitStartHQ/actions@v0.0.6
-        with:
-          upstream: https://github.com/jueti/tailscale-android
+          git reset HEAD
+          git pull --ff
       - name: modify
         run: |
           sed -i '/b.backend.Start(ipn.Options/,+2d' cmd/tailscale/backend.go

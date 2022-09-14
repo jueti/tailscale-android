@@ -19,11 +19,9 @@ jobs:
               pushd tailscale-android
           fi
       - name: clean
-        run: |
-          git clean -fd
-          git reset
+        run: git clean -fd
       - name: pull
-        run: git pull --ff
+        run: git reset && git pull --ff
       - name: modify
         run: |
           sed -i '/b.backend.Start(ipn.Options/,+2d' cmd/tailscale/backend.go
@@ -33,7 +31,6 @@ jobs:
         run: |
           docker build -t tailscale-android .
           docker run -v ${PWD}:/build/tailscale-android --rm tailscale-android make tailscale-debug.apk
- 
       - name: Upload Release
         uses: softprops/action-gh-release@v1
         if: ${{ success() }}

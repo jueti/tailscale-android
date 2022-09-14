@@ -19,7 +19,9 @@ jobs:
           ref: 'main'
       - name: reset
         if: ${{ failure() }}
-        run: git reset --hard HEAD
+        run: |
+          git checkout .
+          git reset --hard HEAD
       - name: pull
         uses: GitStartHQ/actions@v0.0.6
         with:
